@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35017.193
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgilionPdtScanner", "AgilionPdtScanner\AgilionPdtScanner.csproj", "{573A7079-DC5B-40D3-B6D4-EA118B224C74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectAgilion", "TestProjectAgilion\TestProjectAgilion.csproj", "{B2CCF61A-5A70-41B7-83E1-40884770334B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{573A7079-DC5B-40D3-B6D4-EA118B224C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{573A7079-DC5B-40D3-B6D4-EA118B224C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{573A7079-DC5B-40D3-B6D4-EA118B224C74}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{573A7079-DC5B-40D3-B6D4-EA118B224C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{573A7079-DC5B-40D3-B6D4-EA118B224C74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{573A7079-DC5B-40D3-B6D4-EA118B224C74}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B2CCF61A-5A70-41B7-83E1-40884770334B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2CCF61A-5A70-41B7-83E1-40884770334B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2CCF61A-5A70-41B7-83E1-40884770334B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2CCF61A-5A70-41B7-83E1-40884770334B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1EFA9C31-A926-4A39-A3D9-D109DF3649C3}
+	EndGlobalSection
+EndGlobal

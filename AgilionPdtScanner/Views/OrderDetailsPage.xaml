@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AgilionPdtScanner.ViewModels"
+             xmlns:dto="clr-namespace:AgilionPdtScanner.DTOs"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+             x:Class="AgilionPdtScanner.Views.OrderDetailsPage"
+             Title="{Binding SelectedOrder.Name}">
+    <ContentPage.BindingContext>
+        <vm:OrderDetailsPageViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        
+        <!-- Camera Barcode Reader View -->
+        <ContentView Grid.Row="0" BackgroundColor="Gray">
+            <!-- Product scanning done here -->
+            <Grid>
+                
+                <zxing:CameraBarcodeReaderView
+                    x:Name="cameraBarcodeReaderView"
+                    BarcodesDetected="BarcodesDetected"
+                    
+                    />
+
+                <Label Text="Hover the Camera over the product barcode to scan or scan by tapping on an item in the list below to mark it as scan."                       
+                       TextColor="White"
+                       FontSize="Micro"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Start"
+                       BackgroundColor="Transparent" Padding="10"/>
+                <HorizontalStackLayout HorizontalOptions="Center"
+                                       Margin="10"
+                                       VerticalOptions="End" Spacing="30">
+                    <Button Text="FlipCam" 
+                            BackgroundColor="Transparent" 
+                            TextColor="DarkGoldenrod"
+                            FontAttributes="Bold"
+                            BorderWidth="3"
+                            BorderColor="Orange"
+                            Clicked="FlipCamera_Button_Clicked"/>
+                    
+                    <Button Text="Torch" 
+                            BackgroundColor="Transparent" 
+                            TextColor="DarkGoldenrod"
+                            FontAttributes="Bold"
+                            BorderWidth="3"
+                            BorderColor="Orange"
+                            Clicked="OnTorch_Button_Clicked"/>
+                </HorizontalStackLayout>
+            </Grid>
+        </ContentView>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="4*" />
+            </Grid.RowDefinitions>
+
+            <!-- Subheading StackLayout -->
+            <StackLayout Grid.Row="0" BackgroundColor="DarkGray" Padding="5,0,5,0" >
+
+                <Label Text="{Binding SelectedOrder.Name}" 
+                       FontSize="Small"
+                       FontAttributes="Bold" TextColor="Wheat"
+                       HorizontalTextAlignment="Center"
+                       />
+                <Label FontSize="Micro" HorizontalOptions="Center" >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding SelectedOrder.Number}" 
+                                  TextColor="White" />
+                            <Span Text=" --- " FontAttributes="Bold"
+                                  TextColor="White" />
+                            <Span Text="{Binding SelectedOrder.Date}" 
+                                  TextColor="White" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <StackLayout Padding="12" BackgroundColor="LightGray">
+                    <Grid>
+                        <BoxView HeightRequest="4" Color="Orange" WidthRequest="270"/>
+                        <BoxView HeightRequest="6" Color="Green" 
+                                 HorizontalOptions="Start"
+                                 WidthRequest="{Binding SelectedOrder.QuantityScannedPercentage}"                                 
+                                 />
+                    </Grid>
+                    
+                </StackLayout>
+                <Label FontSize="Small" HorizontalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Total Scanned: "
+                                  TextColor="LightGray"
+                                  />
+                            <Span Text="{Binding SelectedOrder.QuantityScanned}"
+                                    FontAttributes="Bold" 
+                                    TextColor="White" />
+                            <Span Text="/" FontAttributes="Bold" TextColor="Yellow" />
+                            <Span Text="{Binding SelectedOrder.ItemsCount}" 
+                                    FontAttributes="Bold"
+                                    TextColor="White" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+
+            <!-- Collection View -->
+            <ContentView Grid.Row="1" VerticalOptions="EndAndExpand">
+                <CollectionView x:Name="ItemsCollectionView"
+                        EmptyView="Loading...."
+                        ItemsLayout="VerticalList"
+                        ItemsSource="{Binding OrderListDtos, Mode=TwoWay}"
+                        SelectionChangedCommand="{Binding Path=BindingContext.ItemClickedCommand, Source={Reference ItemsCollectionView}}"
+                        SelectionChangedCommandParameter="{Binding Path=SelectedItem, Source={x:Reference ItemsCollectionView}}"       
+                        SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="dto:Item">
+                            <Border Margin="10,5" Padding="0"
+                                    BackgroundColor="WhiteSmoke"
+                                    Stroke="LightGray"
+                                    StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Frame Grid.Column="0" BorderColor="Transparent"
+                                           WidthRequest="70"
+                                           HeightRequest="70"
+                                           CornerRadius="35"
+                                           Padding="10"
+                                           Margin="3"
+                                           >
+                                        <Label Text="{Binding Numbering}" VerticalOptions="Center"
+                                               HorizontalOptions="Center"
+                                               TextColor="{Binding StatusColor}"
+                                               FontAttributes="Bold"
+                                               />
+                                    </Frame>
+                                    <StackLayout Padding="10" Grid.Column="1">
+                                        <Label Text="{Binding Designation}" FontAttributes="Bold" TextColor="{Binding StatusColor}"/>                                    
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="ItemCode: " />
+                                                    <Span Text="{Binding Code}" FontAttributes="Bold" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Quantity: " />
+                                                    <Span Text="{Binding Quantity}" FontAttributes="Bold" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </StackLayout>
+                                    <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                            IsVisible="{Binding IsBusy}" 
+                                            HorizontalOptions="Center" 
+                                            VerticalOptions="Center" 
+                                            Color="Orange"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ContentView>
+
+        </Grid>
+        
+        
+        
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="AgilionPdtScanner.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AgilionPdtScanner"
+    xmlns:views="clr-namespace:AgilionPdtScanner.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="AgilionPdtScanner">
+
+    <ShellContent
+        Title="Service Agilion Services Inc"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        
+        Route="MainPage" />
+
+    
+
+</Shell>
